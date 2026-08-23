@@ -10,7 +10,7 @@ class ProjectListNotifier extends StateNotifier<AsyncValue<List<Project>>> {
   final AuthState _authState;
 
   ProjectListNotifier(this._repository, this._orgId, this._authState)
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     if (_orgId != null && _orgId.isNotEmpty) {
       loadProjects();
     } else {
@@ -51,7 +51,9 @@ class ProjectListNotifier extends StateNotifier<AsyncValue<List<Project>>> {
     try {
       final updated = await _repository.updateProject(project);
       final currentList = state.value ?? [];
-      final newList = currentList.map((p) => p.id == updated.id ? updated : p).toList();
+      final newList = currentList
+          .map((p) => p.id == updated.id ? updated : p)
+          .toList();
       state = AsyncValue.data(newList);
       return true;
     } catch (e, st) {
@@ -72,7 +74,7 @@ class ProjectListNotifier extends StateNotifier<AsyncValue<List<Project>>> {
       final newList = currentList.where((p) => p.id != projectId).toList();
       state = AsyncValue.data(newList);
       return true;
-    } catch (e, st) {
+    } catch (e) {
       // Re-throw so caller can display the exact exception message (e.g. PermissionException)
       rethrow;
     }
@@ -80,14 +82,18 @@ class ProjectListNotifier extends StateNotifier<AsyncValue<List<Project>>> {
 }
 
 final projectListProvider =
-    StateNotifierProvider<ProjectListNotifier, AsyncValue<List<Project>>>((ref) {
-  final repo = ref.watch(projectRepositoryProvider);
-  final authState = ref.watch(authProvider);
-  return ProjectListNotifier(repo, authState.orgId, authState);
-});
+    StateNotifierProvider<ProjectListNotifier, AsyncValue<List<Project>>>((
+      ref,
+    ) {
+      final repo = ref.watch(projectRepositoryProvider);
+      final authState = ref.watch(authProvider);
+      return ProjectListNotifier(repo, authState.orgId, authState);
+    });
 
-final projectDetailProvider =
-    FutureProvider.family<Project, String>((ref, projectId) async {
+final projectDetailProvider = FutureProvider.family<Project, String>((
+  ref,
+  projectId,
+) async {
   final repo = ref.watch(projectRepositoryProvider);
   return await repo.getProjectById(projectId);
 });

@@ -6,11 +6,7 @@ class PriorityChip extends StatelessWidget {
   final TaskPriority priority;
   final bool compact;
 
-  const PriorityChip({
-    super.key,
-    required this.priority,
-    this.compact = false,
-  });
+  const PriorityChip({super.key, required this.priority, this.compact = false});
 
   Color _getColor() {
     switch (priority) {
@@ -48,17 +44,13 @@ class PriorityChip extends StatelessWidget {
         vertical: compact ? 2 : 4,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            _getIcon(),
-            size: compact ? 12 : 14,
-            color: color,
-          ),
+          Icon(_getIcon(), size: compact ? 12 : 14, color: color),
           const SizedBox(width: 3),
           Text(
             priority.displayName,

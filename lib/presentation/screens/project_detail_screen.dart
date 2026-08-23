@@ -14,10 +14,7 @@ import '../widgets/status_badge.dart';
 class ProjectDetailScreen extends ConsumerWidget {
   final String projectId;
 
-  const ProjectDetailScreen({
-    super.key,
-    required this.projectId,
-  });
+  const ProjectDetailScreen({super.key, required this.projectId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,15 +53,24 @@ class ProjectDetailScreen extends ConsumerWidget {
       ),
       body: projectAsync.when(
         data: (project) {
-          final projectTasks = tasksAsync.value
+          final projectTasks =
+              tasksAsync.value
                   ?.where((t) => t.projectId == projectId)
                   .toList() ??
               [];
 
-          final todoCount = projectTasks.where((t) => t.status == TaskStatus.todo).length;
-          final inProgCount = projectTasks.where((t) => t.status == TaskStatus.inProgress).length;
-          final reviewCount = projectTasks.where((t) => t.status == TaskStatus.review).length;
-          final completedCount = projectTasks.where((t) => t.status == TaskStatus.completed).length;
+          final todoCount = projectTasks
+              .where((t) => t.status == TaskStatus.todo)
+              .length;
+          final inProgCount = projectTasks
+              .where((t) => t.status == TaskStatus.inProgress)
+              .length;
+          final reviewCount = projectTasks
+              .where((t) => t.status == TaskStatus.review)
+              .length;
+          final completedCount = projectTasks
+              .where((t) => t.status == TaskStatus.completed)
+              .length;
 
           return RefreshIndicator(
             onRefresh: () async {
@@ -89,7 +95,9 @@ class ProjectDetailScreen extends ConsumerWidget {
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Icon(
@@ -133,7 +141,7 @@ class ProjectDetailScreen extends ConsumerWidget {
                                 height: 1.4,
                               ),
                             ),
-                          ]
+                          ],
                         ],
                       ),
                     ),
@@ -148,13 +156,29 @@ class ProjectDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      _buildSummaryCard('To Do', todoCount, AppColors.statusTodo),
+                      _buildSummaryCard(
+                        'To Do',
+                        todoCount,
+                        AppColors.statusTodo,
+                      ),
                       const SizedBox(width: 8),
-                      _buildSummaryCard('In Progress', inProgCount, AppColors.statusInProgress),
+                      _buildSummaryCard(
+                        'In Progress',
+                        inProgCount,
+                        AppColors.statusInProgress,
+                      ),
                       const SizedBox(width: 8),
-                      _buildSummaryCard('Review', reviewCount, AppColors.statusReview),
+                      _buildSummaryCard(
+                        'Review',
+                        reviewCount,
+                        AppColors.statusReview,
+                      ),
                       const SizedBox(width: 8),
-                      _buildSummaryCard('Completed', completedCount, AppColors.statusCompleted),
+                      _buildSummaryCard(
+                        'Completed',
+                        completedCount,
+                        AppColors.statusCompleted,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -165,11 +189,16 @@ class ProjectDetailScreen extends ConsumerWidget {
                     children: [
                       const Text(
                         'Project Tasks',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         '${projectTasks.length} tasks',
-                        style: const TextStyle(color: AppColors.darkTextSecondary),
+                        style: const TextStyle(
+                          color: AppColors.darkTextSecondary,
+                        ),
                       ),
                     ],
                   ),
@@ -177,10 +206,12 @@ class ProjectDetailScreen extends ConsumerWidget {
                   if (projectTasks.isEmpty)
                     EmptyStateView(
                       title: 'No Tasks Yet',
-                      message: 'Add tasks to this project to start tracking work.',
+                      message:
+                          'Add tasks to this project to start tracking work.',
                       icon: Icons.check_box_outlined,
                       buttonText: 'Add Task',
-                      onButtonPressed: () => context.go('/tasks/new?projectId=$projectId'),
+                      onButtonPressed: () =>
+                          context.go('/tasks/new?projectId=$projectId'),
                     )
                   else
                     ListView.builder(
@@ -206,9 +237,15 @@ class ProjectDetailScreen extends ConsumerWidget {
                               padding: const EdgeInsets.only(top: 6.0),
                               child: Row(
                                 children: [
-                                  PriorityChip(priority: task.priority, compact: true),
+                                  PriorityChip(
+                                    priority: task.priority,
+                                    compact: true,
+                                  ),
                                   const SizedBox(width: 8),
-                                  StatusBadge(status: task.status, compact: true),
+                                  StatusBadge(
+                                    status: task.status,
+                                    compact: true,
+                                  ),
                                 ],
                               ),
                             ),
@@ -243,9 +280,9 @@ class ProjectDetailScreen extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.12),
+          color: color.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.25)),
+          border: Border.all(color: color.withValues(alpha: 0.25)),
         ),
         child: Column(
           children: [

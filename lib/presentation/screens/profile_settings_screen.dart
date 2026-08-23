@@ -16,9 +16,7 @@ class ProfileSettingsScreen extends ConsumerWidget {
     final user = authState.user;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile & Settings'),
-      ),
+      appBar: AppBar(title: const Text('Profile & Settings')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -60,9 +58,13 @@ class ProfileSettingsScreen extends ConsumerWidget {
                             children: [
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 2),
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.15),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
@@ -128,7 +130,10 @@ class ProfileSettingsScreen extends ConsumerWidget {
                 icon: const Icon(Icons.logout, color: AppColors.error),
                 label: const Text(
                   'Log Out',
-                  style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.error,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.error),

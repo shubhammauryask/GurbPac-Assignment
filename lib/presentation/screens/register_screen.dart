@@ -30,7 +30,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final success = await ref.read(authProvider.notifier).register(
+    final success = await ref
+        .read(authProvider.notifier)
+        .register(
           name: _nameController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
@@ -40,10 +42,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     if (!success && mounted) {
       final err = ref.read(authProvider).errorMessage ?? 'Registration failed';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(err),
-          backgroundColor: AppColors.error,
-        ),
+        SnackBar(content: Text(err), backgroundColor: AppColors.error),
       );
     }
   }
@@ -73,8 +72,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   Text(
                     'Create Account',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -115,7 +114,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _selectedOrgId,
+                    initialValue: _selectedOrgId,
                     decoration: const InputDecoration(
                       labelText: 'Select Organization',
                       prefixIcon: Icon(Icons.business_outlined),
@@ -147,7 +146,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
                         onPressed: () {
                           setState(() {

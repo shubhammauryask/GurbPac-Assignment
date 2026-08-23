@@ -10,7 +10,8 @@ class OfflineBanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final debugOpts = ref.watch(debugOptionsProvider);
 
-    final hasSimulatedError = debugOpts.force404Error ||
+    final hasSimulatedError =
+        debugOpts.force404Error ||
         debugOpts.forceTimeoutError ||
         debugOpts.forceValidationError;
 
@@ -22,7 +23,8 @@ class OfflineBanner extends ConsumerWidget {
     Color bannerColor = AppColors.warning;
 
     if (hasSimulatedError) {
-      text = 'Debug Error Simulation Active (${_getSimulatedErrorName(debugOpts)})';
+      text =
+          'Debug Error Simulation Active (${_getSimulatedErrorName(debugOpts)})';
       bannerColor = AppColors.error;
     }
 
@@ -36,7 +38,9 @@ class OfflineBanner extends ConsumerWidget {
         child: Row(
           children: [
             Icon(
-              debugOpts.isOffline ? Icons.wifi_off_rounded : Icons.bug_report_rounded,
+              debugOpts.isOffline
+                  ? Icons.wifi_off_rounded
+                  : Icons.bug_report_rounded,
               color: Colors.white,
               size: 18,
             ),
@@ -64,7 +68,7 @@ class OfflineBanner extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.25),
+                  color: Colors.white.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Text(
@@ -76,7 +80,7 @@ class OfflineBanner extends ConsumerWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

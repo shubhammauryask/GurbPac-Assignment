@@ -28,22 +28,15 @@ class EmptyStateView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                size: 48,
-                color: AppColors.primary,
-              ),
+              child: Icon(icon, size: 48, color: AppColors.primary),
             ),
             const SizedBox(height: 20),
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
@@ -61,8 +54,8 @@ class EmptyStateView extends StatelessWidget {
                 onPressed: onButtonPressed,
                 icon: const Icon(Icons.add),
                 label: Text(buttonText!),
-              )
-            ]
+              ),
+            ],
           ],
         ),
       ),

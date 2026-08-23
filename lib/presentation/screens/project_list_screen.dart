@@ -51,7 +51,8 @@ class ProjectListScreen extends ConsumerWidget {
             if (projects.isEmpty) {
               return EmptyStateView(
                 title: 'No Projects Found',
-                message: 'Create a project to start organizing tasks in your organization.',
+                message:
+                    'Create a project to start organizing tasks in your organization.',
                 icon: Icons.folder_outlined,
                 buttonText: 'Create Project',
                 onButtonPressed: () => context.push('/projects/new'),
@@ -63,7 +64,8 @@ class ProjectListScreen extends ConsumerWidget {
               itemCount: projects.length,
               itemBuilder: (ctx, index) {
                 final project = projects[index];
-                final projectTasks = tasksState.value
+                final projectTasks =
+                    tasksState.value
                         ?.where((t) => t.projectId == project.id)
                         .toList() ??
                     [];
@@ -86,7 +88,9 @@ class ProjectListScreen extends ConsumerWidget {
                               Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Icon(
@@ -123,7 +127,9 @@ class ProjectListScreen extends ConsumerWidget {
                                 icon: const Icon(Icons.more_vert),
                                 onSelected: (val) async {
                                   if (val == 'edit') {
-                                    context.push('/projects/${project.id}/edit');
+                                    context.push(
+                                      '/projects/${project.id}/edit',
+                                    );
                                   } else if (val == 'delete') {
                                     final confirm = await ConfirmDialog.show(
                                       context,
@@ -139,15 +145,21 @@ class ProjectListScreen extends ConsumerWidget {
                                             .read(projectListProvider.notifier)
                                             .deleteProject(project.id);
                                         if (context.mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             const SnackBar(
-                                              content: Text('Project deleted successfully'),
+                                              content: Text(
+                                                'Project deleted successfully',
+                                              ),
                                             ),
                                           );
                                         }
                                       } catch (e) {
                                         if (context.mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
                                               content: Text(e.toString()),
                                               backgroundColor: AppColors.error,
@@ -176,13 +188,17 @@ class ProjectListScreen extends ConsumerWidget {
                                         Icon(
                                           Icons.delete_outline_rounded,
                                           size: 18,
-                                          color: isAdmin ? AppColors.error : AppColors.darkTextSecondary,
+                                          color: isAdmin
+                                              ? AppColors.error
+                                              : AppColors.darkTextSecondary,
                                         ),
                                         const SizedBox(width: 8),
                                         Text(
                                           'Delete Project',
                                           style: TextStyle(
-                                            color: isAdmin ? AppColors.error : AppColors.darkTextSecondary,
+                                            color: isAdmin
+                                                ? AppColors.error
+                                                : AppColors.darkTextSecondary,
                                           ),
                                         ),
                                       ],
@@ -198,8 +214,11 @@ class ProjectListScreen extends ConsumerWidget {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Icons.check_box_outlined,
-                                      size: 16, color: AppColors.darkTextSecondary),
+                                  const Icon(
+                                    Icons.check_box_outlined,
+                                    size: 16,
+                                    color: AppColors.darkTextSecondary,
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '${projectTasks.length} tasks',
@@ -225,9 +244,9 @@ class ProjectListScreen extends ConsumerWidget {
                                     Icons.arrow_forward_ios_rounded,
                                     size: 12,
                                     color: AppColors.primary,
-                                  )
+                                  ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ],

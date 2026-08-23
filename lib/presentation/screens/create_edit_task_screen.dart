@@ -13,14 +13,11 @@ class CreateEditTaskScreen extends ConsumerStatefulWidget {
   final String? taskId;
   final String? initialProjectId;
 
-  const CreateEditTaskScreen({
-    super.key,
-    this.taskId,
-    this.initialProjectId,
-  });
+  const CreateEditTaskScreen({super.key, this.taskId, this.initialProjectId});
 
   @override
-  ConsumerState<CreateEditTaskScreen> createState() => _CreateEditTaskScreenState();
+  ConsumerState<CreateEditTaskScreen> createState() =>
+      _CreateEditTaskScreenState();
 }
 
 class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
@@ -45,7 +42,9 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
 
     if (_isEditing) {
       Future.microtask(() async {
-        final task = await ref.read(taskRepositoryProvider).getTaskById(widget.taskId!);
+        final task = await ref
+            .read(taskRepositoryProvider)
+            .getTaskById(widget.taskId!);
         if (mounted) {
           setState(() {
             _existingTask = task;
@@ -73,7 +72,10 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedProjectId == null || _selectedProjectId!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a project'), backgroundColor: AppColors.error),
+        const SnackBar(
+          content: Text('Please select a project'),
+          backgroundColor: AppColors.error,
+        ),
       );
       return;
     }
@@ -119,7 +121,9 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(_isEditing ? 'Task updated' : 'Task created successfully'),
+            content: Text(
+              _isEditing ? 'Task updated' : 'Task created successfully',
+            ),
           ),
         );
         context.pop();
@@ -148,9 +152,7 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
     final usersAsync = ref.watch(orgMembersProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Task' : 'Create Task'),
-      ),
+      appBar: AppBar(title: Text(_isEditing ? 'Edit Task' : 'Create Task')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Form(
@@ -159,16 +161,21 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Project Dropdown
-              const Text('Project *', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Project *',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 6),
               DropdownButtonFormField<String>(
-                value: _selectedProjectId,
+                initialValue: _selectedProjectId,
                 decoration: const InputDecoration(
                   hintText: 'Select project',
                   prefixIcon: Icon(Icons.folder_outlined),
                 ),
                 items: (projectsState.value ?? [])
-                    .map((p) => DropdownMenuItem(value: p.id, child: Text(p.name)))
+                    .map(
+                      (p) => DropdownMenuItem(value: p.id, child: Text(p.name)),
+                    )
                     .toList(),
                 onChanged: (val) {
                   setState(() {
@@ -215,23 +222,33 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Status', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const Text(
+                          'Status',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         const SizedBox(height: 6),
                         DropdownButtonFormField<TaskStatus>(
-                          value: _selectedStatus,
+                          initialValue: _selectedStatus,
                           decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
                           ),
                           items: TaskStatus.values
                               .map(
                                 (s) => DropdownMenuItem(
                                   value: s,
-                                  child: Text(s.displayName, style: const TextStyle(fontSize: 13)),
+                                  child: Text(
+                                    s.displayName,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
                                 ),
                               )
                               .toList(),
                           onChanged: (val) {
-                            if (val != null) setState(() => _selectedStatus = val);
+                            if (val != null)
+                              setState(() => _selectedStatus = val);
                           },
                         ),
                       ],
@@ -242,23 +259,33 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Priority', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const Text(
+                          'Priority',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         const SizedBox(height: 6),
                         DropdownButtonFormField<TaskPriority>(
-                          value: _selectedPriority,
+                          initialValue: _selectedPriority,
                           decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
                           ),
                           items: TaskPriority.values
                               .map(
                                 (p) => DropdownMenuItem(
                                   value: p,
-                                  child: Text(p.displayName, style: const TextStyle(fontSize: 13)),
+                                  child: Text(
+                                    p.displayName,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
                                 ),
                               )
                               .toList(),
                           onChanged: (val) {
-                            if (val != null) setState(() => _selectedPriority = val);
+                            if (val != null)
+                              setState(() => _selectedPriority = val);
                           },
                         ),
                       ],
@@ -269,18 +296,25 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
               const SizedBox(height: 16),
 
               // Assignee Selector Dropdown
-              const Text('Assignee', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Assignee',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 6),
               DropdownButtonFormField<String?>(
-                value: _selectedAssigneeId,
+                initialValue: _selectedAssigneeId,
                 decoration: const InputDecoration(
                   hintText: 'Unassigned',
                   prefixIcon: Icon(Icons.person_outline),
                 ),
                 items: [
-                  const DropdownMenuItem(value: null, child: Text('Unassigned')),
-                  ...(usersAsync.value ?? [])
-                      .map((u) => DropdownMenuItem(value: u.id, child: Text(u.name))),
+                  const DropdownMenuItem(
+                    value: null,
+                    child: Text('Unassigned'),
+                  ),
+                  ...(usersAsync.value ?? []).map(
+                    (u) => DropdownMenuItem(value: u.id, child: Text(u.name)),
+                  ),
                 ],
                 onChanged: (val) {
                   setState(() => _selectedAssigneeId = val);
@@ -289,14 +323,21 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
               const SizedBox(height: 16),
 
               // Due Date Selector
-              const Text('Due Date', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Due Date',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 6),
               InkWell(
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
-                    initialDate: _selectedDueDate ?? DateTime.now().add(const Duration(days: 7)),
-                    firstDate: DateTime.now().subtract(const Duration(days: 30)),
+                    initialDate:
+                        _selectedDueDate ??
+                        DateTime.now().add(const Duration(days: 7)),
+                    firstDate: DateTime.now().subtract(
+                      const Duration(days: 30),
+                    ),
                     lastDate: DateTime.now().add(const Duration(days: 365)),
                   );
                   if (picked != null) {
@@ -304,7 +345,10 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
                   }
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).inputDecorationTheme.fillColor,
                     borderRadius: BorderRadius.circular(12),
@@ -336,7 +380,10 @@ class _CreateEditTaskScreenState extends ConsumerState<CreateEditTaskScreen> {
                     ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
                       )
                     : Text(_isEditing ? 'Save Changes' : 'Create Task'),
               ),

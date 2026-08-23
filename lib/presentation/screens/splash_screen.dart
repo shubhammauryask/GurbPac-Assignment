@@ -30,7 +30,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.15),
+                color: AppColors.primary.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -43,9 +43,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             Text(
               'TaskFlow',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1,
-                  ),
+                fontWeight: FontWeight.bold,
+                letterSpacing: -1,
+              ),
             ),
             const SizedBox(height: 8),
             const Text(

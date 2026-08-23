@@ -128,7 +128,10 @@ class HomeDashboardTab extends ConsumerWidget {
           children: [
             const Icon(Icons.task_alt_rounded, color: AppColors.primary),
             const SizedBox(width: 8),
-            Text('TaskFlow', style: Theme.of(context).appBarTheme.titleTextStyle),
+            Text(
+              'TaskFlow',
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
           ],
         ),
         actions: [
@@ -136,9 +139,11 @@ class HomeDashboardTab extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             margin: const EdgeInsets.only(right: 16),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.15),
+              color: AppColors.primary.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.3),
+              ),
             ),
             child: Text(
               authState.role == OrgRole.orgAdmin ? 'ORG ADMIN' : 'MEMBER',
@@ -148,7 +153,7 @@ class HomeDashboardTab extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          )
+          ),
         ],
       ),
       body: RefreshIndicator(
@@ -201,7 +206,7 @@ class HomeDashboardTab extends ConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -216,23 +221,44 @@ class HomeDashboardTab extends ConsumerWidget {
               const SizedBox(height: 12),
               tasksState.when(
                 data: (tasks) {
-                  final todoCount = tasks.where((t) => t.status == TaskStatus.todo).length;
-                  final inProgCount =
-                      tasks.where((t) => t.status == TaskStatus.inProgress).length;
-                  final reviewCount =
-                      tasks.where((t) => t.status == TaskStatus.review).length;
-                  final completedCount =
-                      tasks.where((t) => t.status == TaskStatus.completed).length;
+                  final todoCount = tasks
+                      .where((t) => t.status == TaskStatus.todo)
+                      .length;
+                  final inProgCount = tasks
+                      .where((t) => t.status == TaskStatus.inProgress)
+                      .length;
+                  final reviewCount = tasks
+                      .where((t) => t.status == TaskStatus.review)
+                      .length;
+                  final completedCount = tasks
+                      .where((t) => t.status == TaskStatus.completed)
+                      .length;
 
                   return Row(
                     children: [
-                      _buildMetricTile('To Do', todoCount, AppColors.statusTodo),
+                      _buildMetricTile(
+                        'To Do',
+                        todoCount,
+                        AppColors.statusTodo,
+                      ),
                       const SizedBox(width: 8),
-                      _buildMetricTile('In Progress', inProgCount, AppColors.statusInProgress),
+                      _buildMetricTile(
+                        'In Progress',
+                        inProgCount,
+                        AppColors.statusInProgress,
+                      ),
                       const SizedBox(width: 8),
-                      _buildMetricTile('Review', reviewCount, AppColors.statusReview),
+                      _buildMetricTile(
+                        'Review',
+                        reviewCount,
+                        AppColors.statusReview,
+                      ),
                       const SizedBox(width: 8),
-                      _buildMetricTile('Done', completedCount, AppColors.statusCompleted),
+                      _buildMetricTile(
+                        'Done',
+                        completedCount,
+                        AppColors.statusCompleted,
+                      ),
                     ],
                   );
                 },
@@ -261,7 +287,7 @@ class HomeDashboardTab extends ConsumerWidget {
                   Text(
                     '${projectsState.value?.length ?? 0} Total',
                     style: const TextStyle(color: AppColors.darkTextSecondary),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -272,7 +298,9 @@ class HomeDashboardTab extends ConsumerWidget {
                       child: Padding(
                         padding: EdgeInsets.all(24.0),
                         child: Center(
-                          child: Text('No projects found in this organization.'),
+                          child: Text(
+                            'No projects found in this organization.',
+                          ),
                         ),
                       ),
                     );
@@ -284,7 +312,8 @@ class HomeDashboardTab extends ConsumerWidget {
                       itemCount: projects.length,
                       itemBuilder: (ctx, i) {
                         final proj = projects[i];
-                        final projTasks = tasksState.value
+                        final projTasks =
+                            tasksState.value
                                 ?.where((t) => t.projectId == proj.id)
                                 .toList() ??
                             [];
@@ -324,14 +353,18 @@ class HomeDashboardTab extends ConsumerWidget {
                                     const Spacer(),
                                     Row(
                                       children: [
-                                        const Icon(Icons.task, size: 14, color: AppColors.primary),
+                                        const Icon(
+                                          Icons.task,
+                                          size: 14,
+                                          color: AppColors.primary,
+                                        ),
                                         const SizedBox(width: 4),
                                         Text(
                                           '${projTasks.length} tasks',
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                       ],
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -359,9 +392,7 @@ class HomeDashboardTab extends ConsumerWidget {
                     return const Card(
                       child: Padding(
                         padding: EdgeInsets.all(24.0),
-                        child: Center(
-                          child: Text('No tasks found.'),
-                        ),
+                        child: Center(child: Text('No tasks found.')),
                       ),
                     );
                   }
@@ -389,7 +420,10 @@ class HomeDashboardTab extends ConsumerWidget {
                             padding: const EdgeInsets.only(top: 4.0),
                             child: Row(
                               children: [
-                                PriorityChip(priority: task.priority, compact: true),
+                                PriorityChip(
+                                  priority: task.priority,
+                                  compact: true,
+                                ),
                                 const SizedBox(width: 8),
                                 StatusBadge(status: task.status, compact: true),
                               ],
@@ -422,9 +456,9 @@ class HomeDashboardTab extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.2)),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
         ),
         child: Column(
           children: [

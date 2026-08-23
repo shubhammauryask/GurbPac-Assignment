@@ -6,11 +6,7 @@ class StatusBadge extends StatelessWidget {
   final TaskStatus status;
   final bool compact;
 
-  const StatusBadge({
-    super.key,
-    required this.status,
-    this.compact = false,
-  });
+  const StatusBadge({super.key, required this.status, this.compact = false});
 
   Color _getColor() {
     switch (status) {
@@ -48,18 +44,14 @@ class StatusBadge extends StatelessWidget {
         vertical: compact ? 3 : 5,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            _getIcon(),
-            size: compact ? 12 : 14,
-            color: color,
-          ),
+          Icon(_getIcon(), size: compact ? 12 : 14, color: color),
           const SizedBox(width: 4),
           Text(
             status.displayName,

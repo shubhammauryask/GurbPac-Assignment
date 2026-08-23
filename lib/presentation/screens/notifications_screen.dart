@@ -35,7 +35,8 @@ class NotificationsScreen extends ConsumerWidget {
             if (notifications.isEmpty) {
               return const EmptyStateView(
                 title: 'Inbox Empty',
-                message: 'You have no notifications or assignment alerts at the moment.',
+                message:
+                    'You have no notifications or assignment alerts at the moment.',
                 icon: Icons.notifications_none_rounded,
               );
             }
@@ -49,10 +50,12 @@ class NotificationsScreen extends ConsumerWidget {
                   margin: const EdgeInsets.only(bottom: 8),
                   color: notif.isRead
                       ? null
-                      : AppColors.primary.withOpacity(0.08),
+                      : AppColors.primary.withValues(alpha: 0.08),
                   child: ListTile(
                     onTap: () {
-                      ref.read(notificationsProvider.notifier).markAsRead(notif.id);
+                      ref
+                          .read(notificationsProvider.notifier)
+                          .markAsRead(notif.id);
                       context.push('/tasks/${notif.taskId}');
                     },
                     leading: CircleAvatar(
